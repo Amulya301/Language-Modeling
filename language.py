@@ -60,7 +60,16 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
-    return
+    newlst = buildVocabulary(corpus)
+    dict1 = {}
+    for i in corpus:
+        for j in i:
+            if j in newlst:
+                if j not in dict1:
+                    dict1[j] = 1
+                else:
+                    dict1[j] +=1
+    return dict1
 
 
 '''
