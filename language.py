@@ -4,6 +4,7 @@ Name:
 Roll No:
 """
 
+from types import new_class
 import language_tests as test
 
 project = "Language" # don't edit this
@@ -79,7 +80,13 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def getStartWords(corpus):
-    return
+    newlst = []
+    for i in corpus:
+        if i[0] not in newlst:
+            newlst.append(i[0])
+        else:
+            break
+    return newlst
 
 
 '''
@@ -89,7 +96,15 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countStartWords(corpus):
-    return
+    strtlst = getStartWords(corpus)
+    dict1 = {}
+    for i in corpus:
+        if i[0] in strtlst:
+            if i[0] not in dict1:
+                dict1[i[0]] = 1
+            else:
+                dict1[i[0]] +=1
+    return dict1
 
 
 '''
