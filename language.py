@@ -33,8 +33,10 @@ Parameters: 2D list of strs
 Returns: int
 '''
 def getCorpusLength(corpus):
-    return
-
+    sum = 0
+    for word in corpus:
+        sum = sum +len(word)
+    return sum
 
 '''
 buildVocabulary(corpus)
