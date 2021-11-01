@@ -252,7 +252,13 @@ Parameters: 2D list of strs
 Returns: None
 '''
 def graphTop50Words(corpus):
-    return
+    unigrams = buildVocabulary(corpus)
+    unigramcount = countUnigrams(corpus)
+    length = getCorpusLength(corpus)
+    unigramprob = buildUnigramProbs(unigrams, unigramcount, length)
+    res = getTopWords(50, unigrams, unigramprob, ignore)
+
+    return barPlot(res,"Top 50")
 
 
 '''
@@ -395,9 +401,5 @@ if __name__ == "__main__":
 
     ## Uncomment these for Week 3 ##
 
-    # print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
-    # test.runWeek3()
-    barPlot({'A':1,'B':2,'C':3}, "Sample bar chart")
-    sideBySideBarPlots([1,2,3,4], [4,5,6,7] , [10,11,12,13] , ['P','Q','R','S'], ['A','B','C','D'], "Sample Side Bar plot")
-    scatterPlot([0.0125,0.013,0.004,0.007], [0.0025,0.0075,0.0125,0.0050], ['A','B','C','D'], "Sample Scatter Plot")
-    
+    print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek3()
