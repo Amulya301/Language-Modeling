@@ -1,7 +1,7 @@
 """
 Language Modeling Project
-Name:
-Roll No:
+Name: Amulya
+Roll No: 2021501007
 """
 
 from types import new_class
@@ -244,6 +244,9 @@ ignore = [ ",", ".", "?", "'", '"', "-", "!", ":", ";", "by", "around", "over",
            "as", "an", "but", "at", "if", "so", "was", "were", "for", "this",
            "that", "onto", "from", "not", "into" ]
 
+import numpy
+import matplotlib
+
 '''
 graphTop50Words(corpus)
 #3 [Hw6]
@@ -386,15 +389,15 @@ if __name__ == "__main__":
 
     ## Uncomment these for Week 2 ##
 
-    print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    test.week2Tests()
-    print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek2()
+    # print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
+    # test.week2Tests()
+    # print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek2()
 
 
     ## Uncomment these for Week 3 ##
-"""
+
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     test.runWeek3()
-"""
+
     
