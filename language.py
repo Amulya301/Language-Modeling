@@ -84,8 +84,6 @@ def getStartWords(corpus):
     for i in corpus:
         if i[0] not in newlst:
             newlst.append(i[0])
-        else:
-            break
     return newlst
 
 
@@ -268,7 +266,11 @@ Parameters: 2D list of strs
 Returns: None
 '''
 def graphTopStartWords(corpus):
-    return
+    strtwords = getStartWords(corpus)
+    strtcount = countStartWords(corpus)
+    strtprob = buildUnigramProbs(strtwords, strtcount, len(corpus))
+    res = getTopWords(50, strtwords, strtprob, ignore)
+    return barPlot(res, "Top Start Words")
 
 
 '''
