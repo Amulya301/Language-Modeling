@@ -5,6 +5,8 @@ Roll No: 2021501007
 """
 
 from types import new_class
+
+from matplotlib.pyplot import bar
 import language_tests as test
 
 project = "Language" # don't edit this
@@ -134,12 +136,8 @@ Returns: list of floats
 '''
 def buildUniformProbs(unigrams):
     newlst = []
-    dict1 = {}
     for i in unigrams:
-        if i not in dict1:
-            dict1[i] = 1
-    for j in dict1.values():
-        newlst.append(j/len(dict1))
+        newlst.append(1 / len(unigrams))
     return newlst
 
 
@@ -280,7 +278,11 @@ Parameters: 2D list of strs ; str
 Returns: None
 '''
 def graphTopNextWords(corpus, word):
-    return
+    unigramcount = countUnigrams(corpus)
+    bigramcount = countBigrams(corpus)
+    succword = buildBigramProbs(unigramcount, bigramcount)
+    res = getTopWords(10, succword[word]["words"], succword[word]["probs"], ignore)
+    return barPlot(res, "Top 10")
 
 
 '''
