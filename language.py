@@ -4,6 +4,7 @@ Name:
 Roll No:
 """
 
+from types import new_class
 import language_tests as test
 
 project = "Language" # don't edit this
@@ -17,7 +18,13 @@ Parameters: str
 Returns: 2D list of strs
 '''
 def loadBook(filename):
-    return
+    message = []
+    with open(filename) as file1:
+        txt = file1.read().splitlines()
+    for i in txt:
+        if len(i) !=0:
+            message .append( i.split(' ') )
+    return message
 
 
 '''
@@ -27,8 +34,10 @@ Parameters: 2D list of strs
 Returns: int
 '''
 def getCorpusLength(corpus):
-    return
-
+    sum = 0
+    for word in corpus:
+        sum = sum +len(word)
+    return sum
 
 '''
 buildVocabulary(corpus)
@@ -37,7 +46,12 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def buildVocabulary(corpus):
-    return
+    newlst = []
+    for word in corpus:
+        for i in word:
+            if i not in newlst:
+                newlst.append(i)
+    return newlst
 
 
 '''
@@ -47,7 +61,16 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
-    return
+    newlst = buildVocabulary(corpus)
+    dict1 = {}
+    for i in corpus:
+        for j in i:
+            if j in newlst:
+                if j not in dict1:
+                    dict1[j] = 1
+                else:
+                    dict1[j] +=1
+    return dict1
 
 
 '''
@@ -57,7 +80,13 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def getStartWords(corpus):
-    return
+    newlst = []
+    for i in corpus:
+        if i[0] not in newlst:
+            newlst.append(i[0])
+        else:
+            break
+    return newlst
 
 
 '''
@@ -67,7 +96,15 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countStartWords(corpus):
-    return
+    strtlst = getStartWords(corpus)
+    dict1 = {}
+    for i in corpus:
+        if i[0] in strtlst:
+            if i[0] not in dict1:
+                dict1[i[0]] = 1
+            else:
+                dict1[i[0]] +=1
+    return dict1
 
 
 '''
@@ -77,7 +114,16 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def countBigrams(corpus):
-    return
+    dict1 = {}
+    for word in corpus:
+        for j in range(len(word)-1):
+            if word[j] not in dict1:
+                dict1[word[j]] = {}
+            if word[j+1] not in dict1[word[j]] :
+                dict1[word[j]][word[j+1]] = 1
+            else:
+                dict1[word[j]][word[j+1]] +=1
+    return dict1
 
 
 ### WEEK 2 ###
@@ -89,7 +135,14 @@ Parameters: list of strs
 Returns: list of floats
 '''
 def buildUniformProbs(unigrams):
-    return
+    newlst = []
+    dict1 = {}
+    for i in unigrams:
+        if i not in dict1:
+            dict1[i] = 1
+    for j in dict1.values():
+        newlst.append(j/len(dict1))
+    return newlst
 
 
 '''
@@ -99,7 +152,11 @@ Parameters: list of strs ; dict mapping strs to ints ; int
 Returns: list of floats
 '''
 def buildUnigramProbs(unigrams, unigramCounts, totalCount):
-    return
+    lst = []
+    for i in range(len(unigrams)):
+        if unigrams[i] in unigramCounts:
+            lst.append(unigramCounts[unigrams[i]] / totalCount)
+    return lst
 
 
 '''
@@ -109,7 +166,18 @@ Parameters: dict mapping strs to ints ; dict mapping strs to (dicts mapping strs
 Returns: dict mapping strs to (dicts mapping strs to (lists of values))
 '''
 def buildBigramProbs(unigramCounts, bigramCounts):
-    return
+    nesteddict = {}
+    for prevWord in bigramCounts:
+        word = []
+        prob = []
+        for key,value in bigramCounts[prevWord].items():
+            word.append(key)
+            prob.append(value / unigramCounts[prevWord]) 
+            temp = {}
+            temp["words"] =word
+            temp["probs"] = prob
+        nesteddict[prevWord] = temp
+    return nesteddict
 
 
 '''
@@ -118,8 +186,18 @@ getTopWords(count, words, probs, ignoreList)
 Parameters: int ; list of strs ; list of floats ; list of strs
 Returns: dict mapping strs to floats
 '''
+import operator
 def getTopWords(count, words, probs, ignoreList):
-    return
+    dict1 = {}
+    dict2 = {}
+    for i in range(len(words)):
+        if i not in ignoreList:
+            dict2[words[i]] = probs[i]
+    mostcommon = dict(sorted(dict2.items(), key=operator.itemgetter(1), reverse=True))
+    for i,j in mostcommon.items():
+        if len(dict1) != count and i not in ignoreList:
+            dict1[i] = j
+    return dict1
 
 
 '''
@@ -285,21 +363,22 @@ def scatterPlot(xs, ys, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek1()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek1()
 
     ## Uncomment these for Week 2 ##
-"""
+
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
-"""
+
 
     ## Uncomment these for Week 3 ##
 """
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     test.runWeek3()
 """
+    
