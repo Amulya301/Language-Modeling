@@ -17,7 +17,13 @@ Parameters: str
 Returns: 2D list of strs
 '''
 def loadBook(filename):
-    return
+    message = []
+    with open(filename) as file1:
+        txt = file1.read().splitlines()
+    for i in txt:
+        if len(i) !=0:
+            message .append( i.split(' ') )
+    return message
 
 
 '''
@@ -27,8 +33,10 @@ Parameters: 2D list of strs
 Returns: int
 '''
 def getCorpusLength(corpus):
-    return
-
+    sum = 0
+    for word in corpus:
+        sum = sum +len(word)
+    return sum
 
 '''
 buildVocabulary(corpus)
@@ -37,7 +45,12 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def buildVocabulary(corpus):
-    return
+    newlst = []
+    for word in corpus:
+        for i in word:
+            if i not in newlst:
+                newlst.append(i)
+    return newlst
 
 
 '''
@@ -47,7 +60,16 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
-    return
+    newlst = buildVocabulary(corpus)
+    dict1 = {}
+    for i in corpus:
+        for j in i:
+            if j in newlst:
+                if j not in dict1:
+                    dict1[j] = 1
+                else:
+                    dict1[j] +=1
+    return dict1
 
 
 '''
@@ -291,7 +313,7 @@ if __name__ == "__main__":
     test.runWeek1()
 
     ## Uncomment these for Week 2 ##
-"""
+    """
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
@@ -303,3 +325,4 @@ if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     test.runWeek3()
 """
+    
