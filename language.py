@@ -292,7 +292,29 @@ Parameters: 2D list of strs ; 2D list of strs ; int
 Returns: dict mapping strs to (lists of values)
 '''
 def setupChartData(corpus1, corpus2, topWordCount):
-    return
+    finaldict = {}
+    frstprob = []
+    secondprob = []
+    unigrams1, unigrams = buildVocabulary(corpus1), buildVocabulary(corpus2)
+    dict1, unigramcount = countUnigrams(corpus1), countUnigrams(corpus2)
+    length1, length = getCorpusLength(corpus1), getCorpusLength(corpus2)
+    probs1, unigramprob = buildUnigramProbs(unigrams1, dict1, length1), buildUnigramProbs(unigrams, unigramcount, length)
+    res1, res2 = getTopWords(topWordCount, unigrams1, probs1, ignore), getTopWords(topWordCount, unigrams, unigramprob, ignore)
+    lst = list(res1.keys()) + list(res2.keys())
+    topwords = list(dict.fromkeys(lst))
+    for i in range(len(topwords)):
+        if topwords[i] in unigrams1:
+            ind = unigrams1.index(topwords[i])
+            frstprob.append(probs1[ind])
+        else:
+            frstprob.append(0)
+        if topwords[i] in unigrams:
+            ind = unigrams.index(topwords[i])
+            secondprob.append(unigramprob[ind])
+    finaldict["topWords"] = topwords
+    finaldict["corpus1Probs"] = frstprob
+    finaldict["corpus2Probs"] = secondprob
+    return finaldict
 
 
 '''
@@ -302,6 +324,8 @@ Parameters: 2D list of strs ; str ; 2D list of strs ; str ; int ; str
 Returns: None
 '''
 def graphTopWordsSideBySide(corpus1, name1, corpus2, name2, numWords, title):
+    dict1 = setupChartData(corpus1, corpus2, numWords)
+    sideBySideBarPlots(dict1["topWords"], dict1["corpus1Probs"], dict1["corpus2Probs"], name1, name2, "Top Words Side By Side")
     return
 
 
@@ -312,6 +336,8 @@ Parameters: 2D list of strs ; 2D list of strs ; int ; str
 Returns: None
 '''
 def graphTopWordsInScatterplot(corpus1, corpus2, numWords, title):
+    dict1 = setupChartData(corpus1, corpus2, numWords)
+    scatterPlot(dict1["corpus1Probs"], dict1["corpus2Probs"], dict1["topWords"], "Top Words Scatter Plot")
     return
 
 
@@ -404,6 +430,5 @@ if __name__ == "__main__":
 
 
     ## Uncomment these for Week 3 ##
-
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     test.runWeek3()
