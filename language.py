@@ -325,7 +325,7 @@ Returns: None
 '''
 def graphTopWordsSideBySide(corpus1, name1, corpus2, name2, numWords, title):
     dict1 = setupChartData(corpus1, corpus2, numWords)
-    sideBySideBarPlots(dict1["topWords"], dict1["corpus1Probs"], dict1["corpus2Probs"], name1, name2, "Top Words Side By Side")
+    sideBySideBarPlots(dict1["topWords"], dict1["corpus1Probs"], dict1["corpus2Probs"], name1, name2, title)
     return
 
 
@@ -337,7 +337,7 @@ Returns: None
 '''
 def graphTopWordsInScatterplot(corpus1, corpus2, numWords, title):
     dict1 = setupChartData(corpus1, corpus2, numWords)
-    scatterPlot(dict1["corpus1Probs"], dict1["corpus2Probs"], dict1["topWords"], "Top Words Scatter Plot")
+    scatterPlot(dict1["corpus1Probs"], dict1["corpus2Probs"], dict1["topWords"], title)
     return
 
 
